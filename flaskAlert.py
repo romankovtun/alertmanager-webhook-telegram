@@ -52,10 +52,10 @@ async def postAlertmanager():
             await bot.sendMessage(chat_id=chatID, text=message)
             return "Alert OK", 200
     except KeyError as error:
-        await bot.sendMessage(chat_id=chatID, text="Error! " + str(error)   )
+        bot.sendMessage(chat_id=chatID, text="Error! " + str(error)   )
         return "Alert nOK", 200
     except:
-        await bot.sendMessage(chat_id=chatID, text="Error! with content: " + str(sys.exc_info()[0]) )
+        bot.sendMessage(chat_id=chatID, text="Error! with content: " + str(sys.exc_info()[0]) )
         return "Alert nOK", 200
 
 
