@@ -19,7 +19,7 @@ bot = telegram.Bot(token= os.environ['TELEGRAM_BOTTOKEN']  )
 chatID = os.environ['TELEGRAM_CHATID']
 
 @app.route('/alert', methods = ['POST'])
-def postAlertmanager():
+async def postAlertmanager():
 
     content = json.loads(request.get_data())
     pprint.pprint(content)
@@ -49,13 +49,13 @@ def postAlertmanager():
                     message += "\n%s\n" % alert['annotations']['message']
 
 
-            bot.sendMessage(chat_id=chatID, text=message)
+            await bot.sendMessage(chat_id=chatID, text=message)
             return "Alert OK", 200
     except KeyError as error:
-        bot.sendMessage(chat_id=chatID, text="Error! " + str(error)   )
+        await bot.sendMessage(chat_id=chatID, text="Error! " + str(error)   )
         return "Alert nOK", 200
     except:
-        bot.sendMessage(chat_id=chatID, text="Error! with content: " + str(sys.exc_info()[0]) )
+        await bot.sendMessage(chat_id=chatID, text="Error! with content: " + str(sys.exc_info()[0]) )
         return "Alert nOK", 200
 
 
