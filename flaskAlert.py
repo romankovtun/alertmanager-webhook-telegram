@@ -21,7 +21,7 @@ bot = telegram.Bot(token= os.environ['TELEGRAM_BOTTOKEN']  )
 chatID = os.environ['TELEGRAM_CHATID']
 
 @app.route('/alert', methods = ['POST'])
-async def postAlertmanager():
+def postAlertmanager():
 
     content = json.loads(request.get_data())
     pprint.pprint(content)
