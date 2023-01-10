@@ -4,10 +4,12 @@ import json
 import os
 import sys
 import pprint
+import asyncio
 from flask import Flask
 from flask import request
 from flask_basicauth import BasicAuth
 
+loop = asyncio.get_event_loop()
 app = Flask(__name__)
 app.secret_key = 'aYT>.L$kk2h>!'
 app.config['BASIC_AUTH_USERNAME'] = os.environ['BASIC_AUTH_USERNAME']
@@ -49,13 +51,13 @@ async def postAlertmanager():
                     message += "\n%s\n" % alert['annotations']['message']
 
 
-            await bot.sendMessage(chat_id=chatID, text=message)
+            loop.run_until_complete(bot.sendMessage(chat_id=chatID, text=message))
             return "Alert OK", 200
     except KeyError as error:
-        bot.sendMessage(chat_id=chatID, text="Error! " + str(error)   )
+        loop.run_until_complete(bot.sendMessage(chat_id=chatID, text="Error! " + str(error)   ))
         return "Alert nOK", 200
     except:
-        bot.sendMessage(chat_id=chatID, text="Error! with content: " + str(sys.exc_info()[0]) )
+        loop.run_until_complete(bot.sendMessage(chat_id=chatID, text="Error! with content: " + str(sys.exc_info()[0]) ))
         return "Alert nOK", 200
 
 
